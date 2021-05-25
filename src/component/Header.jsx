@@ -1,9 +1,12 @@
 import React from 'react';
+import Nav from './Navbar/Nav'
+import './Style/Header.css';
 
 export const Header = () =>{
     return(
         <header>
-            Online Store
-        </header>
+            Pinjaman Online
+            <Nav/>
+         </header>  
     )
 }

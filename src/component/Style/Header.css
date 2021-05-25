@@ -1,0 +1,12 @@
+header{
+    
+    margin: 0px;
+    display: flex;
+    padding-left: 30px;
+    
+    align-items: center;
+    justify-content: space-between;
+    background-color: chartreuse;
+    
+
+}
