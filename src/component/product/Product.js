@@ -1,12 +1,15 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './Product.css'
+import Pagination from './Pagination';
 
 
 const Product = () =>{
     const [product,setProduct] = useState([]);
-    useEffect(()=>{
-        axios.get('http://localhost:3000/produk')
+    const [page,setPage] = useState(1)
+    
+    useEffect( ()=>{
+        axios.get(`http://localhost:3000/produk?page=${page}`)
         .then(res=>(
             setProduct(res.data)
             ))
@@ -23,6 +26,7 @@ const Product = () =>{
                     <p>{item.harga}</p>
                 </div>
             ))}
+            <Pagination/>
         </div>
     )
 }
