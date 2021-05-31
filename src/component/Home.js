@@ -1,12 +1,14 @@
 import React from 'react';
 import Product from './product/Product';
-
+import {Route,Switch} from 'react-router-dom'
 
 
 const Home = () =>{
     return(
         <div>
-            <Product/>
+        <Switch>
+        <Route path="/" component={Product} />
+        </Switch>   
 
 
         </div>
