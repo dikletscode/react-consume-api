@@ -7,8 +7,8 @@ const Pagination = ({ props, page, total }) => {
     after: page >= total ? "disabled" : " ",
   };
   return (
-    <nav aria-label='Page navigation example'>
-      <ul className='pagination justify-content-center'>
+    <nav>
+      <ul className='pagination justify-content-center '>
         <li className={`page-item ${limit.before}`}>
           <a className='page-link' onClick={props.decrement} tabIndex='-1'>
             Previous

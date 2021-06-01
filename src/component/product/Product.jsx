@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useReducer } from "react";
 import "./Product.css";
 import Pagination from "./Pagination";
 import CardProduct from "./CardProduct";
@@ -22,22 +22,32 @@ const Product = () => {
   const getData = async () => {
     try {
       await axios.get(`http://localhost:3000/produk?page=${page}`).then((res) => {
-        setProduct(res.data), setTotal(Math.ceil(res.data[0].total / 5));
+        setProduct(res.data), setTotal(Math.ceil(res.data[0].total / 5)), setLoading(false);
       });
     } catch (error) {
+      setLoading(true);
       console.log(error);
     }
   };
-
   useEffect(() => {
     getData();
-  });
+  }, [page]);
+  const spinner = (vis) => {
+    return (
+      <div
+        class={`${vis} spinner-grow  mx-auto `}
+        style={{ width: "10rem", height: "10rem" }}
+        role='status'
+      ></div>
+    );
+  };
 
   return (
     <>
+      <div>{loading == true ? spinner("d-block") : spinner("d-none ")}</div>
+
       <CardProduct data={product} />
       <Pagination props={props} page={page} total={total} />
-      {loading}
     </>
   );
 };

@@ -1,9 +1,11 @@
 header {
-  margin: 0px;
   display: flex;
   padding-left: 30px;
-
   align-items: center;
   justify-content: space-between;
   background-color: chartreuse;
+}
+h1 {
+  font-family: "Merienda", cursive;
+  font-size: 4.5vh;
 }
