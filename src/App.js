@@ -1,18 +1,14 @@
-import React from 'react';
-import {Header }from './component/Header'
-import Home from './component/Home';
-import './App.css';
-import {BrowserRouter as Router} from 'react-router-dom';
+import React from "react";
+import { Header } from "./component/Header";
+import "./App.css";
+// import {BrowserRouter as Router} from 'react-router-dom';
+import Product from "./component/product/Product";
 
- 
-const App = () =>
-<Router>
+const App = () => (
   <div>
-
-  <Header/>
-  <Home/>
-  
+    <Header />
+    <Product />
   </div>
-  </Router>
- 
+);
+
 export default App;

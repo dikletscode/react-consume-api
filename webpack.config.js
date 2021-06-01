@@ -1,36 +1,35 @@
-const webpack = require('webpack');
-const path = require('path');
- 
+const webpack = require("webpack");
+const path = require("path");
+
 module.exports = {
-  entry: path.resolve(__dirname, './src/index.js'),
+  entry: ["babel-polyfill", path.resolve(__dirname, "./src/index.js")],
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader'],
+        use: ["babel-loader"],
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource',
+        type: "asset/resource",
       },
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        use: ["style-loader", "css-loader"],
       },
-
     ],
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx'],
+    extensions: ["*", ".js", ".jsx"],
   },
   output: {
-    path: path.resolve(__dirname, './public'),
-    filename: 'bundle.js',
+    path: path.resolve(__dirname, "./public"),
+    filename: "bundle.js",
   },
   plugins: [new webpack.HotModuleReplacementPlugin()],
   devServer: {
-    contentBase: path.resolve(__dirname, './public'),
+    contentBase: path.resolve(__dirname, "./public"),
     hot: true,
   },
 };
