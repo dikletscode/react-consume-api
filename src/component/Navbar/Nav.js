@@ -1,16 +1,18 @@
-import React from 'react';
-import './Nav.css';
+import React from "react";
+import "./Nav.css";
+import { Menu } from "../resource/Menu";
 
-const Nav = () =>{
-    return(
-        <nav>
-            <ul>
-                <li>Beranda</li>
-                <li>Produk Pinjaman</li>
-                <li>Transaksi</li>
-                <li>Profile</li>     
-            </ul>
-        </nav>
-    )
-}
+const li = Menu.map((item) => <li>{item.title}</li>);
+const Nav = () => {
+  return (
+    <>
+      <nav className='nav-container'>
+        <ul className='item'>
+          <i class='fa fa-shopping-cart fa-2x'></i>
+          {li}
+        </ul>
+      </nav>
+    </>
+  );
+};
 export default Nav;

@@ -1,11 +1,20 @@
 header {
+  overflow: hidden;
+  position: fixed;
   display: flex;
-  padding-left: 30px;
   align-items: center;
   justify-content: space-between;
-  background-color: chartreuse;
+  margin: 0px;
+  padding-left: 60px;
+  background-color: #ffafcc;
+  color: #f1faee;
+  z-index: 2;
+
+  top: 0px;
+  width: 100vw;
+  margin-bottom: 100px;
 }
 h1 {
   font-family: "Merienda", cursive;
-  font-size: 4.5vh;
+  font-size: 3.2vh;
 }

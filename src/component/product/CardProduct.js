@@ -3,25 +3,64 @@ import "./CardProduct.css";
 
 const GetData = ({ data }) => {
   return (
-    <div class='row row-cols-1 row-cols-md-5 g-4'>
-      {data.map((item) => (
-        <div class='col'>
-          <div class='card h-100 m-1 p-3'>
-            <img src={item.gambar} class='card-img-top gam' alt='...' />
-            <div class='card-body'>
-              <h5 class='card-title'>Card title</h5>
-              <p class='card-text'>
-                This is a wider card with supporting text below as a natural lead-in to additional
-                content. This content is a little bit longer.
-              </p>
+    <>
+      <div className='container'>
+        <h3 className='title'> Flash Sale</h3>
+        <div className='row'>
+          {data.map((item) => (
+            <div className='col-md-3 col-sm-6'>
+              <div className='container-inside'>
+                <div className='container-img'>
+                  <a href='#'>
+                    <img className='pic-1' src={item.gambar} />
+                    <img className='pic-2' src={item.gambar} />
+                  </a>
+                  <ul className='describe'>
+                    <li>
+                      <a href='' data-tip='Detail'>
+                        <i className='fa fa-search'></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a href='' data-tip='lihat nanti'>
+                        <i className='fa fa-shopping-bag'></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a href='' data-tip='Tambahkan ke Keranjang'>
+                        <i className='fa fa-shopping-cart'></i>
+                      </a>
+                    </li>
+                  </ul>
+                  <span className='label-produk'>Sale</span>
+                  <span className='label-diskon'>20%</span>
+                </div>
+                <ul className='rating'>
+                  <li className='fa fa-star'></li>
+                  <li className='fa fa-star'></li>
+                  <li className='fa fa-star'></li>
+                  <li className='fa fa-star'></li>
+                  <li className='fa fa-star '></li>
+                </ul>
+                <div className='produk-deks'>
+                  <h3 className='title'>
+                    <a href='#'>{item.nama_produk}</a>
+                  </h3>
+                  <div className='price'>
+                    {`IDR. ${item.harga}`}
+                    <span>{item.harga + 50000}</span>
+                  </div>
+                  <a className='teks' href=''>
+                    + Tambahkan ke Keranjang
+                  </a>
+                </div>
+              </div>
             </div>
-            <div class='card-footer'>
-              <small class='text-muted'>Last updated 3 mins ago</small>
-            </div>
-          </div>
+          ))}
         </div>
-      ))}
-    </div>
+      </div>
+    </>
   );
 };
+
 export default GetData;
