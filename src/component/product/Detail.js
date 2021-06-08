@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export const Detail = () => {
+const Detail = () => {
   const [item, setItem] = useState([]);
 
   return (
@@ -25,3 +25,4 @@ export const Detail = () => {
     </div>
   );
 };
+export default Detail;

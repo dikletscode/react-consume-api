@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState, useReducer } from "react";
-import "./Product.css";
+import "./style/Product.css";
 import Pagination from "./Pagination";
 import CardProduct from "./CardProduct";
 
@@ -9,6 +9,8 @@ const Product = () => {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [single, setSingleItem] = useState([]);
+  const [item, setItem] = useState("");
 
   const props = {
     increment: () => {
@@ -19,10 +21,20 @@ const Product = () => {
     },
   };
 
-  const getData = async () => {
+  const getAllData = async () => {
     try {
       await axios.get(`http://localhost:3000/produk?page=${page}`).then((res) => {
-        setProduct(res.data), setTotal(Math.ceil(res.data[0].total / 5)), setLoading(false);
+        setProduct(res.data), setTotal(Math.ceil(res.data[0].total / 8)), setLoading(false);
+      });
+    } catch (error) {
+      setLoading(true);
+      console.log(error);
+    }
+  };
+  const getData = async (idproduk) => {
+    try {
+      await axios.get(`http://localhost:3000/produk/${idproduk}`).then((res) => {
+        setSingleItem(res.data);
       });
     } catch (error) {
       setLoading(true);
@@ -30,7 +42,7 @@ const Product = () => {
     }
   };
   useEffect(() => {
-    getData();
+    getAllData();
   }, [page]);
   const spinner = (vis) => {
     return (
@@ -48,6 +60,7 @@ const Product = () => {
 
       <CardProduct data={product} />
       <Pagination props={props} page={page} total={total} />
+      <button onClick={() => getData("A0A0A05")}>{console.log(single)}aaaa</button>
     </>
   );
 };

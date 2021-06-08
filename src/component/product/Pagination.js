@@ -1,5 +1,5 @@
 import React from "react";
-import "./Pagination.css";
+import "./style/Pagination.css";
 
 const Pagination = ({ props, page, total }) => {
   const limit = {
@@ -14,7 +14,7 @@ const Pagination = ({ props, page, total }) => {
             Previous
           </a>
         </li>
-        <li className='page-item'>
+        {/* <li className='page-item'>
           <a className='page-link' href='#'>
             1
           </a>
@@ -28,7 +28,7 @@ const Pagination = ({ props, page, total }) => {
           <a className='page-link' href='#'>
             3
           </a>
-        </li>
+        </li> */}
         <li className={`page-item ${limit.after}`}>
           <a className='page-link' onClick={props.increment}>
             Next
