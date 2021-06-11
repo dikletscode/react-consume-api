@@ -1,8 +1,10 @@
 import axios from "axios";
-import React, { useEffect, useState, useReducer } from "react";
+import React, { useEffect, useState, useReducer, useContext } from "react";
 import "./style/Product.css";
+import { useParams } from "react-router-dom";
 import Pagination from "./Pagination";
 import CardProduct from "./CardProduct";
+import { Context } from "../../App";
 
 const Product = () => {
   const [product, setProduct] = useState([]);
@@ -10,7 +12,6 @@ const Product = () => {
   const [total, setTotal] = useState(1);
   const [loading, setLoading] = useState(true);
   const [single, setSingleItem] = useState([]);
-  const [item, setItem] = useState("");
 
   const props = {
     increment: () => {
@@ -31,16 +32,7 @@ const Product = () => {
       console.log(error);
     }
   };
-  const getData = async (idproduk) => {
-    try {
-      await axios.get(`http://localhost:3000/produk/${idproduk}`).then((res) => {
-        setSingleItem(res.data);
-      });
-    } catch (error) {
-      setLoading(true);
-      console.log(error);
-    }
-  };
+
   useEffect(() => {
     getAllData();
   }, [page]);
@@ -57,10 +49,9 @@ const Product = () => {
   return (
     <>
       <div>{loading == true ? spinner("d-block") : spinner("d-none ")}</div>
-
       <CardProduct data={product} />
       <Pagination props={props} page={page} total={total} />
-      <button onClick={() => getData("A0A0A05")}>{console.log(single)}aaaa</button>
+      {/* <button onClick={() => getData(`${idProduk}`)}>{console.log(single)}aaaa</button> */}
     </>
   );
 };
