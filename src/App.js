@@ -3,6 +3,7 @@ import { Header } from "./component/Header";
 import "./App.css";
 import React, { createContext, useState } from "react";
 import Detail from "./component/product/Detail";
+import Form from "./component/login/Form";
 
 // import {BrowserRouter as Router} from 'react-router-dom';
 import Product from "./component/product/Product";
@@ -15,11 +16,11 @@ const App = () => {
     <Context.Provider value={[idProduk, setIdProduk]}>
       <Router>
         <Header />
-
         <>
           <Switch>
-            <Route path='/' exact component={Product} />
+            <Route path='/regis' component={Form} />
             <Route path={`/:id_produk`} component={Detail} />
+            <Route path='/' exact component={Product} />
           </Switch>
           <footer className='text-center'>
             {idProduk}

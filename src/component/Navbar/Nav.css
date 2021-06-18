@@ -16,3 +16,7 @@ li {
   margin: 10px;
   list-style: none;
 }
+.icon {
+  height: 30px;
+  padding-right: 10px;
+}

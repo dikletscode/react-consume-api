@@ -3,4 +3,5 @@ export const Menu = [
   { title: "Transaksi" },
   { title: "Penagihan" },
   { title: "Profile" },
+  
 ];

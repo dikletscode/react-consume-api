@@ -1,0 +1,11 @@
+.contain {
+  padding-top: 100px;
+}
+.signup {
+  border-style: solid;
+  border-width: 1px;
+  border-color: violet;
+}
+.form {
+  padding: 20px;
+}
