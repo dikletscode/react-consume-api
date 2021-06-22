@@ -13,7 +13,7 @@ const Nav = () => {
           <i class='fa fa-shopping-cart fa-2x'></i>
           {li}
           <li>
-            <Link to='/regis'>
+            <Link to='/login'>
               <img src={enter} className='icon' />
             </Link>
           </li>

@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import "./Form.css";
 
 axios.defaults.withCredentials = true;
+
 const Form = () => {
+  let history = useHistory();
   const [data, setData] = useState({
     username: "",
     email: "",
@@ -13,8 +16,8 @@ const Form = () => {
     emailLogin: "",
     passwordLogin: "",
   });
-  const [store, setStore] = useState([]);
-  const [loginStatus, setLoginStatus] = useState("");
+  const [loginStatus, setLoginStatus] = useState(false);
+  const [message, setMessage] = useState("");
 
   const submit = () => {
     axios
@@ -24,39 +27,39 @@ const Form = () => {
         password: data.password,
       })
       .then((res) => {
-        console.log(res).catch((err) => console.log(err));
+        setMessage(res.data.message);
       });
   };
-  const loginSubmit = () => {
+  const loginSubmit = (e) => {
     axios
       .post("http://localhost:3000/login", {
         email: login.emailLogin,
         password: login.passwordLogin,
       })
       .then((res) => {
-        if (res.data.msg) {
-          setLoginStatus(res.data.msg);
-          console.log(loginStatus);
+        if (res.data.logIn === true) {
+          setLoginStatus(true);
+          localStorage.setItem("user", JSON.stringify(res.data));
+          history.push("/");
         } else {
-          setLoginStatus(res.data[0].username);
+          setLoginStatus(false);
+          history.go(0);
         }
+      })
+      .catch((err) => {
+        console.log(err);
       });
+    e.preventDefault();
   };
 
-  const getLogin = async () => {
-    await axios.get("http://localhost:3000/login").then((res) => {
-      if (res.data.isLogin == true) {
-        setLoginStatus(res.data.user[0].username);
-        console.log(loginStatus);
-      }
-    });
+  const logOut = () => {
+    localStorage.removeItem("user");
   };
-  useEffect(() => {
-    getLogin();
-  }, []);
+  const getUser = () => {
+    return JSON.parse(localStorage.getItem("user"));
+  };
 
   const handleChange = (e) => {
-    e;
     const newData = { ...data };
     newData[e.target.id] = e.target.value;
     setData(newData);
@@ -66,7 +69,12 @@ const Form = () => {
     newLogin[e.target.id] = e.target.value;
     setLogin(newLogin);
   };
-  // console.log(store);
+  const getLogin = async () => {
+    await axios.get("http://localhost:3000/user").then((res) => {});
+  };
+  useEffect(() => {
+    getLogin();
+  }, []);
 
   return (
     <>
@@ -143,12 +151,15 @@ const Form = () => {
                 />
               </div>
               <input type='submit' class='btn btn-primary' />
-              Submit
             </form>
           </div>
         </div>
       </div>
-      <p> {loginStatus}</p>
+
+      <p style={{ "text-align": "center" }}>
+        {message}
+        {loginStatus == false ? <p>login tidak sah</p> : <p>anda telah login</p>}
+      </p>
     </>
   );
 };
