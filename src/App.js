@@ -26,22 +26,13 @@ const App = () => {
     <Context.Provider value={[idProduk, setIdProduk]}>
       <Router>
         <Header />
-
         <Switch>
-          {/* <Route exact path='/user'>
-            {JSON.parse(localStorage.getItem("user")).logIn == true ? (
-              <UserProfile />
-            ) : (
-              <Redirect to='/' />
-            )}
-          </Route> */}
           <Route path='/login' component={Form} />
           <Route path={`/:id_produk`} component={Detail} />
           <Route path='/' exact component={Product} />
         </Switch>
-        <footer className='text-center'>
-          {idProduk}
-          <p>&copy; 2021 ig : @dikii_belekok</p>
+        <footer>
+          <p> 2021 ig : @dikii_belekok</p>
         </footer>
       </Router>
     </Context.Provider>

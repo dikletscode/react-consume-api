@@ -1,11 +1,47 @@
-.contain {
-  padding-top: 100px;
+.container-form {
+  display: flex;
+  justify-content: space-around;
+
+  padding: 100px;
+  background-color: #feffff;
 }
-.signup {
-  border-style: solid;
-  border-width: 1px;
-  border-color: violet;
+
+.inside {
+  padding: 30px;
 }
-.form {
-  padding: 20px;
+.form-regis {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+  justify-content: center;
+  height: 50vh;
+  box-shadow: 0 8px 6px -6px #219ebc;
+  border-radius: 50px;
+}
+
+.form-login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  padding: 50px;
+  box-shadow: 0 8px 6px -6px #219ebc;
+  height: 50vh;
+  border-radius: 50px;
+}
+.input {
+  width: 30vw;
+  height: 5vh;
+  border-radius: 5px;
+  border-color: antiquewhite;
+}
+.submit {
+  border-radius: 20px;
+  width: 30%;
+  background-color: #4ecdc4;
+  border-color: aliceblue;
+}
+legend {
+  font-family: "Exo", sans-serif;
 }

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState, useReducer, useContext } from "react";
 import "./style/Product.css";
+import { spinner } from "../Spinner";
 import { useParams } from "react-router-dom";
 import Pagination from "./Pagination";
 import CardProduct from "./CardProduct";
@@ -24,9 +25,14 @@ const Product = () => {
 
   const getAllData = async () => {
     try {
-      await axios.get(`http://localhost:3000/produk?page=${page}`).then((res) => {
-        setProduct(res.data), setTotal(Math.ceil(res.data[0].total / 8)), setLoading(false);
-      });
+      await axios
+        .get(`http://localhost:3000/produk?page=${page}`)
+        .then((res) => {
+          setProduct(res.data), setTotal(Math.ceil(res.data[0].total / 8)), setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } catch (error) {
       setLoading(true);
       console.log(error);
@@ -36,15 +42,6 @@ const Product = () => {
   useEffect(() => {
     getAllData();
   }, [page]);
-  const spinner = (vis) => {
-    return (
-      <div
-        className={`${vis} spinner-border  mx-auto text-danger m-5 `}
-        style={{ width: "10rem", height: "10rem" }}
-        role='status'
-      ></div>
-    );
-  };
 
   return (
     <>

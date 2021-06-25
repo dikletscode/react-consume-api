@@ -21,10 +21,12 @@ const GetData = ({ data, klik }) => {
                   </a>
                   <ul className='describe'>
                     <li onClick={() => setIdProduk(item.id_produk)}>
-                      <Link to={{ pathname: `/${item.id_produk}`, state: item }}>
-                        <a href='' data-tip='Detail' onClick={klik}>
-                          <i className='fa fa-search'></i>
-                        </a>
+                      <Link
+                        data-tip='Detail'
+                        onClick={klik}
+                        to={{ pathname: `/${item.id_produk}`, state: item }}
+                      >
+                        <i className='fa fa-search'></i>
                       </Link>
                     </li>
                     <li>

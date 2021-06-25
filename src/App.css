@@ -1,10 +1,33 @@
+html,
+body {
+  height: 100%;
+}
 body {
   margin: 0;
-  padding: 0;
 }
 body {
   font-family: "Open Sans", sans-serif;
 }
-footer p {
-  font-size: 20px;
+footer {
+  display: flex;
+  background-color: #fb8500;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  height: 40px;
+  width: 100%;
+  color: white;
+  border-top: 1px solid white;
+  justify-content: center;
+  align-items: center;
+}
+footer > p {
+  font-family: "Baloo Tammudu 2", cursive;
+  bottom: 0px;
+  color: black;
+
+  margin: auto;
+  font-size: 1.1rem;
 }

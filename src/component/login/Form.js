@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import "./Form.css";
+import authService from "../../services/auth.service.js";
+import validasi from "./validasi/FormValidasi";
 
 axios.defaults.withCredentials = true;
 
@@ -16,47 +18,32 @@ const Form = () => {
     emailLogin: "",
     passwordLogin: "",
   });
-  const [loginStatus, setLoginStatus] = useState(false);
   const [message, setMessage] = useState("");
 
-  const submit = () => {
-    axios
-      .post("http://localhost:3000/signup", {
-        username: data.username,
-        email: data.email,
-        password: data.password,
-      })
-      .then((res) => {
-        setMessage(res.data.message);
-      });
-  };
-  const loginSubmit = (e) => {
-    axios
-      .post("http://localhost:3000/login", {
-        email: login.emailLogin,
-        password: login.passwordLogin,
-      })
-      .then((res) => {
-        if (res.data.logIn === true) {
-          setLoginStatus(true);
-          localStorage.setItem("user", JSON.stringify(res.data));
-          history.push("/");
-        } else {
-          setLoginStatus(false);
-          history.go(0);
-        }
+  const handleSignupSubmit = (e) => {
+    authService
+      .register(data.username, data.email, data.password)
+      .then(() => {
+        history.push("/login");
       })
       .catch((err) => {
         console.log(err);
       });
     e.preventDefault();
   };
-
-  const logOut = () => {
-    localStorage.removeItem("user");
-  };
-  const getUser = () => {
-    return JSON.parse(localStorage.getItem("user"));
+  const handleLoginSubmit = (e) => {
+    authService
+      .login(login.emailLogin, login.passwordLogin)
+      .then(() => {
+        history.push("/");
+        window.location.reload();
+      })
+      .catch((err) => {
+        if ((err.response.code = 400)) {
+          setMessage("u can't login");
+        }
+      });
+    e.preventDefault();
   };
 
   const handleChange = (e) => {
@@ -78,15 +65,15 @@ const Form = () => {
 
   return (
     <>
-      <div className='contain d-flex align-items-center justify-content-evenly '>
-        <div className='signup p-2 '>
-          <form className='form col-12' onSubmit={() => submit()}>
-            <legend>sign up</legend>
-            <div className='form-group'>
-              <label for='username'>Username</label>
+      <div className='container-form'>
+        <div className='inside'>
+          <form className='form-regis' onSubmit={() => handleSignupSubmit()}>
+            <legend>Sign up</legend>
+            <div className='data-form'>
+              <label htmlFor='username'>Username</label>
               <input
                 type='text'
-                class='form-control'
+                className='input'
                 id='username'
                 name='username'
                 value={data.username}
@@ -94,12 +81,12 @@ const Form = () => {
                 placeholder='username'
               />
             </div>
-            <div className='form-group'>
-              <label for='email'>Email address</label>
+            <div className='data-form'>
+              <label htmlFor='email'>Email address</label>
               <input
                 type='email'
                 name='email'
-                class='form-control'
+                className='input'
                 id='email'
                 value={data.email}
                 onChange={(e) => handleChange(e)}
@@ -107,59 +94,55 @@ const Form = () => {
                 placeholder='Enter email'
               />
             </div>
-            <div className='form-group'>
-              <label for='password'>Password</label>
+            <div className='data-form'>
+              <label htmlFor='password'>Password</label>
               <input
                 type='password'
-                class='form-control'
+                className='input'
                 id='password'
                 value={data.password}
                 onChange={(e) => handleChange(e)}
                 placeholder='Password'
               />
             </div>
-            <input type='submit' class='btn btn-primary' />
-            Submit
+            <br />
+            <input type='submit' className='submit' />
           </form>
         </div>
-        <div className='signup p-2'>
-          <div className='form'>
-            <form className='col-12' onSubmit={(e) => loginSubmit(e)}>
-              <legend>Login</legend>
-              <div className='form-group'>
-                <label for='email'>Email address</label>
-                <input
-                  type='email'
-                  name='emailLogin'
-                  class='form-control'
-                  id='emailLogin'
-                  value={login.emailLogin}
-                  onChange={(e) => handleLogin(e)}
-                  aria-describedby='emailHelp'
-                  placeholder='Enter email'
-                />
-              </div>
-              <div className='form-group'>
-                <label for='password'>Password</label>
-                <input
-                  type='password'
-                  class='form-control'
-                  id='passwordLogin'
-                  value={login.passwordLogin}
-                  onChange={(e) => handleLogin(e)}
-                  placeholder='Password'
-                />
-              </div>
-              <input type='submit' class='btn btn-primary' />
-            </form>
-          </div>
+        <div className='inside'>
+          <form className='form-login' onSubmit={(e) => handleLoginSubmit(e)}>
+            <legend>Login</legend>
+            <div className='data-form'>
+              <label htmlFor='email'>Email address</label>
+              <input
+                type='email'
+                name='emailLogin'
+                className='input'
+                id='emailLogin'
+                value={login.emailLogin}
+                onChange={(e) => handleLogin(e)}
+                aria-describedby='emailHelp'
+                placeholder='Enter email'
+              />
+            </div>
+            <div className='data-form'>
+              <label htmlFor='password'>Password</label>
+              <input
+                type='password'
+                className='input'
+                id='passwordLogin'
+                value={login.passwordLogin}
+                onChange={(e) => handleLogin(e)}
+                placeholder='Password'
+              />
+            </div>
+            <br />
+            <input type='submit' className='submit' />
+          </form>
         </div>
       </div>
-
-      <p style={{ "text-align": "center" }}>
-        {message}
-        {loginStatus == false ? <p>login tidak sah</p> : <p>anda telah login</p>}
-      </p>
+      )}
+      <p style={{ textAlign: "center" }}>{message}</p>
     </>
   );
 };
