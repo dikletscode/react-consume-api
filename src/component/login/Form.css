@@ -5,6 +5,17 @@
   padding: 100px;
   background-color: #feffff;
 }
+.submit-err {
+  color: red;
+  text-align: center;
+}
+.warning {
+  color: red;
+  display: block;
+}
+.clear-warning {
+  display: none;
+}
 
 .inside {
   padding: 30px;
@@ -23,7 +34,6 @@
 .form-login {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   background-color: white;
   padding: 50px;
   box-shadow: 0 8px 6px -6px #219ebc;
@@ -35,6 +45,12 @@
   height: 5vh;
   border-radius: 5px;
   border-color: antiquewhite;
+}
+.input-invalid {
+  width: 30vw;
+  height: 5vh;
+  border-radius: 5px;
+  border-color: red;
 }
 .submit {
   border-radius: 20px;
