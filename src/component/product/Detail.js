@@ -19,7 +19,7 @@ const Detail = () => {
               <h5 className='card-title'>{item.nama_produk}</h5>
               <p className='card-text'>{item.deksripsi}</p>
               <p className='card-text'>
-                <small className='text-muted'>Last updated 3 mins ago</small>
+                <small className='text-muted'> Last updated 3 mins ago</small>
               </p>
             </div>
           </div>
@@ -28,4 +28,5 @@ const Detail = () => {
     </div>
   );
 };
+
 export default Detail;

@@ -5,7 +5,6 @@ import { spinner } from "../Spinner";
 import { useParams } from "react-router-dom";
 import Pagination from "./Pagination";
 import CardProduct from "./CardProduct";
-import { Context } from "../../App";
 
 const Product = () => {
   const [product, setProduct] = useState([]);

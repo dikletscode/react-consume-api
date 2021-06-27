@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory, Redirect } from "react-router-dom";
 import axios from "axios";
 import "./Form.css";
 import authService from "../../services/auth.service.js";
 import EmailInput, { validasi } from "./validasi/FormValidasi";
+import { AuthContext } from "../../App";
 
 axios.defaults.withCredentials = true;
 
@@ -20,21 +21,31 @@ const Form = () => {
   });
   const [message, setMessage] = useState("");
   const [isLogin, setStatus] = useState(false);
-  const [valid, setValid] = useState({
+  const [validLogin, setValidLogin] = useState({
     setCss: "input",
     warning: "clear-warning",
   });
+  const [validRegis, setValidRegis] = useState({
+    setCss: "input",
+    warning: "clear-warning",
+  });
+  const [isLogins, setLogins] = React.useContext(AuthContext);
 
   const handleSignupSubmit = (e) => {
-    authService
-      .register(data.username, data.email, data.password)
-      .then(() => {
-        history.push("/login");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
     e.preventDefault();
+    if (validasi(data.email) == true) {
+      authService
+        .register(data.username, data.email, data.password)
+        .then(() => {
+          window.location.reload();
+          setLogins(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      setValidRegis({ setCss: "input-invalid", warning: "warning" });
+    }
   };
 
   const handleLoginSubmit = (e) => {
@@ -45,6 +56,7 @@ const Form = () => {
         .then((res) => {
           if (res.logIn == true) {
             setStatus(res.logIn);
+            setLogins(true);
           } else {
             setMessage("wrong account");
           }
@@ -56,7 +68,7 @@ const Form = () => {
           }
         });
     } else {
-      setValid({ setCss: "input-invalid", warning: "warning" });
+      setValidLogin({ setCss: "input-invalid", warning: "warning" });
     }
   };
 
@@ -64,19 +76,14 @@ const Form = () => {
     const newData = { ...data };
     newData[e.target.id] = e.target.value;
     setData(newData);
+    setValidRegis({ setCss: "input", warning: "clear-warning" });
   };
   const handleLogin = (e) => {
     const newLogin = { ...login };
     newLogin[e.target.id] = e.target.value;
     setLogin(newLogin);
-    setValid({ setCss: "input", warning: "clear-warning" });
+    setValidLogin({ setCss: "input", warning: "clear-warning" });
   };
-  const getLogin = async () => {
-    await axios.get("http://localhost:3000/user").then((res) => {});
-  };
-  useEffect(() => {
-    getLogin();
-  }, []);
 
   return (
     <>
@@ -85,7 +92,7 @@ const Form = () => {
       ) : (
         <div className='container-form'>
           <div className='inside'>
-            <form className='form-regis' onSubmit={(e) => handleSignupSubmit(e)}>
+            <form autocomplete='off' className='form-regis' onSubmit={(e) => handleSignupSubmit(e)}>
               <legend>Sign up</legend>
               <div className='data-form'>
                 <label htmlFor='username'>Username</label>
@@ -97,17 +104,19 @@ const Form = () => {
                   value={data.username}
                   onChange={(e) => handleChange(e)}
                   placeholder='username'
+                  defaultValue='Reset'
                   required
                 />
               </div>
               <div className='data-form'>
                 <label htmlFor='email'>Email address</label>
                 <EmailInput
-                  id='emailSubmit'
-                  name='input'
+                  id='email'
+                  name={validRegis.setCss}
                   value={data.email}
                   change={(e) => handleChange(e)}
-                />
+                />{" "}
+                <p className={validRegis.warning}>invalid email format </p>
               </div>
               <div className='data-form'>
                 <label htmlFor='password'>Password</label>
@@ -118,6 +127,7 @@ const Form = () => {
                   value={data.password}
                   onChange={(e) => handleChange(e)}
                   placeholder='Password'
+                  defaultValue='Reset'
                   required
                 />
               </div>
@@ -132,11 +142,12 @@ const Form = () => {
                 <label htmlFor='email'>Email address </label>
                 <EmailInput
                   id='emailLogin'
-                  name={valid.setCss}
+                  name={validLogin.setCss}
                   value={login.emailLogin}
                   change={(e) => handleLogin(e)}
+                  defaultValue='Reset'
                 />
-                <p className={valid.warning}>invalid email format </p>
+                <p className={validLogin.warning}>invalid email format </p>
               </div>
               <div className='data-form'>
                 <label htmlFor='password'>Password</label>

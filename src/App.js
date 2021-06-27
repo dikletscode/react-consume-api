@@ -8,34 +8,41 @@ import {
 } from "react-router-dom";
 import { Header } from "./component/Header";
 import "./App.css";
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 import Detail from "./component/product/Detail";
 import Form from "./component/login/Form";
-import { AuthContext, useAuth } from "./context/auth";
+import ProfilePage from "./component/login/ProfilePage";
 import UserProfile from "./component/UserProfile";
-
-// import {BrowserRouter as Router} from 'react-router-dom';
+import PrivateRoute from "./route/PrivateRoute";
 import Product from "./component/product/Product";
 export const Context = createContext();
+export const AuthContext = createContext();
+import axios from "axios";
 
 const App = () => {
-  const auth = useAuth();
   const [idProduk, setIdProduk] = useState("");
+  const [isLogins, setLogins] = useState(false);
 
   return (
-    <Context.Provider value={[idProduk, setIdProduk]}>
-      <Router>
-        <Header />
-        <Switch>
-          <Route path='/login' component={Form} />
-          <Route path={`/:id_produk`} component={Detail} />
-          <Route path='/' exact component={Product} />
-        </Switch>
-        <footer>
-          <p> 2021 ig : @dikii_belekok</p>
-        </footer>
-      </Router>
-    </Context.Provider>
+    <AuthContext.Provider value={[isLogins, setLogins]}>
+      <Context.Provider value={[idProduk, setIdProduk]}>
+        <Router>
+          <Header />
+
+          <Switch>
+            <Route path='/login' component={Form} />
+            <PrivateRoute component={ProfilePage} path='/profile' />
+            />
+            <Route path={`/:id_produk`} component={Detail} />
+            <Route path='/' exact component={Product} />
+          </Switch>
+          <footer>
+            <button onClick={() => getLogin()}>get</button>;
+            <p> 2021 ig : @dikii_belekok{isLogins} </p>
+          </footer>
+        </Router>
+      </Context.Provider>
+    </AuthContext.Provider>
   );
 };
 
