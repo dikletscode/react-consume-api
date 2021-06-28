@@ -25,6 +25,7 @@ const Product = () => {
   const getAllData = async () => {
     try {
       await axios
+
         .get(`http://localhost:3000/produk?page=${page}`)
         .then((res) => {
           setProduct(res.data), setTotal(Math.ceil(res.data[0].total / 8)), setLoading(false);

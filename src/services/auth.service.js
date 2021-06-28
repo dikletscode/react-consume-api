@@ -6,6 +6,22 @@ import jwtValidity from "../component/login/jwtValidity";
 let url = "http://localhost:3000/";
 let data = JSON.parse(localStorage.getItem("user")) || {};
 
+const editProfile = (fullname, noTelp, address, image) => {
+  return axios.put(
+    url + "profile/" + data.result[0].username,
+    {
+      user_id: data.result[0].user_id,
+      fullname: fullname,
+      no_telepon: noTelp,
+      address: address,
+      image: image,
+    },
+    {
+      headers: jwtValidity(),
+    }
+  );
+};
+
 const getProfile = async () => {
   return await axios.get(url + "profile/" + data.result[0].username, {
     headers: jwtValidity(),
@@ -43,4 +59,5 @@ export default {
   login,
   logout,
   getProfile,
+  editProfile,
 };

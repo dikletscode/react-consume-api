@@ -1,0 +1,8 @@
+.handling-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.handling-error > p {
+  font-size: 50vh;
+}
